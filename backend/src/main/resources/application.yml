@@ -1,0 +1,53 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/portfolio_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    time-zone: UTC
+
+# JWT Configuration
+jwt:
+  secret: "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970"
+  expiration: 86400000  # 24 hours in ms
+
+# Cloudinary Configuration
+cloudinary:
+  cloud-name: your-cloud-name
+  api-key: your-api-key
+  api-secret: your-api-secret
+
+# CORS
+cors:
+  allowed-origins: "http://localhost:5173,https://shaksham.dev,https://portfolio-shaksham.netlify.app"
+
+# Mail (optional - configure later)
+spring.mail:
+  host: smtp.gmail.com
+  port: 587
+  username: your-email@gmail.com
+  password: your-app-password
+  properties:
+    mail:
+      smtp:
+        auth: true
+        starttls:
+          enable: true
+
+logging:
+  level:
+    com.shaksham.portfolio: DEBUG
