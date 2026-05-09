@@ -38,8 +38,8 @@ export default function Hero() {
       }}
     >
       {/* Floating Blobs */}
-      <div className="blob w-64 h-64 md:w-96 md:h-96 top-10 -left-20 bg-blue-500" style={{ animationDelay: '0s' }} />
-      <div className="blob w-56 h-56 md:w-80 md:h-80 top-1/2 -right-16 bg-purple-500" style={{ animationDelay: '3s' }} />
+      <div className="blob w-64 h-64 md:w-96 md:h-96 top-10 left-0 md:-left-20 bg-blue-500" style={{ animationDelay: '0s' }} />
+      <div className="blob w-56 h-56 md:w-80 md:h-80 top-1/2 right-0 md:-right-16 bg-purple-500" style={{ animationDelay: '3s' }} />
       <div className="blob w-48 h-48 md:w-64 md:h-64 bottom-10 left-1/3 bg-cyan-500" style={{ animationDelay: '6s' }} />
 
       {/* Grid Background */}
