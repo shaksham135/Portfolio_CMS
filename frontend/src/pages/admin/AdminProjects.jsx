@@ -25,7 +25,23 @@ export default function AdminProjects() {
   const [editing, setEditing] = useState(null)
   const { register, handleSubmit, reset } = useForm()
 
-  useEffect(() => { fetchProjects() }, [])
+  const fetchProjects = async () => {
+    try {
+      const res = await adminApi.getProjects()
+      setProjects(res.data)
+    } catch {
+      toast.error('Failed to load projects')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    adminApi.getProjects()
+      .then(res => setProjects(res.data))
+      .catch(() => toast.error('Failed to load projects'))
+      .finally(() => setLoading(false))
+  }, [])
 
   const openCreate = () => {
     setEditing(null)
@@ -75,17 +91,6 @@ export default function AdminProjects() {
       fetchProjects()
     } catch {
       toast.error('Operation failed')
-    }
-  }
-
-  const fetchProjects = async () => {
-    try {
-      const res = await adminApi.getProjects()
-      setProjects(res.data)
-    } catch {
-      toast.error('Failed to load projects')
-    } finally {
-      setLoading(false)
     }
   }
 

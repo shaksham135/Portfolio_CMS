@@ -1,14 +1,8 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { FiDownload, FiMapPin, FiMail, FiGithub, FiLinkedin, FiCode, FiCpu } from 'react-icons/fi'
+import { FiDownload, FiMapPin, FiMail, FiGithub, FiLinkedin, FiCode } from 'react-icons/fi'
 import { publicApi } from '../../api'
-
-const STATS = [
-  { label: 'Projects Built', value: '15+', icon: '🚀' },
-  { label: 'Technologies', value: '12+', icon: '⚙️' },
-  { label: 'Months Exp.', value: '18+', icon: '📅' },
-]
 
 export default function About() {
   const [about, setAbout] = useState(null)

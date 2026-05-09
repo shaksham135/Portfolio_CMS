@@ -42,7 +42,7 @@ export default function AdminAbout() {
         toast.error('Failed to load profile')
         setLoading(false)
       })
-  }, [])
+  }, [reset])
 
   const onSubmit = async (data) => {
     setSaving(true)

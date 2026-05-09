@@ -107,19 +107,11 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetchStats()
+    adminApi.getStats()
+      .then(res => setStats(res.data))
+      .catch(() => setStats({ projects: 0, skills: 0, testimonials: 0, messages: 0 }))
+      .finally(() => setLoading(false))
   }, [])
-
-  const fetchStats = async () => {
-    try {
-      const res = await adminApi.getStats()
-      setStats(res.data)
-    } catch {
-      setStats({ projects: 0, skills: 0, testimonials: 0, messages: 0 })
-    } finally {
-      setLoading(false)
-    }
-  }
 
   if (loading) return <LoadingState />
 

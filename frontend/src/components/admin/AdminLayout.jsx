@@ -28,14 +28,15 @@ export default function AdminLayout() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  useEffect(() => { fetchUnreadCount() }, [])
-
-  const fetchUnreadCount = async () => {
-    try {
-      const res = await adminApi.getMessages()
-      setUnreadCount(res.data.filter(m => !m.isRead).length)
-    } catch {}
-  }
+  useEffect(() => {
+    adminApi.getMessages()
+      .then(res => {
+        setUnreadCount(res.data.filter(m => !m.isRead).length)
+      })
+      .catch(() => {
+        // Fail silently
+      })
+  }, [])
 
   const handleLogout = () => {
     logout()

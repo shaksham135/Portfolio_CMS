@@ -38,7 +38,13 @@ export default function AdminExperience() {
       .catch(() => toast.error('Failed to load experience'))
       .finally(() => setLoading(false))
   }
-  useEffect(() => { load() }, [])
+  
+  useEffect(() => {
+    adminApi.getExperience()
+      .then(r => setItems(r.data))
+      .catch(() => toast.error('Failed to load experience'))
+      .finally(() => setLoading(false))
+  }, [])
 
   const openCreate = () => {
     setEditing(null)

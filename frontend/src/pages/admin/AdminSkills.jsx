@@ -15,16 +15,6 @@ const CATEGORIES = [
   { id: 'TOOLS', label: 'Tools', icon: FiTool, color: 'emerald' },
 ]
 
-const getColorClasses = (color) => {
-  const colors = {
-    blue: { bg: 'bg-blue-500/10', border: 'border-blue-500/20', text: 'text-blue-400', fill: 'bg-blue-500' },
-    violet: { bg: 'bg-violet-500/10', border: 'border-violet-500/20', text: 'text-violet-400', fill: 'bg-violet-500' },
-    cyan: { bg: 'bg-cyan-500/10', border: 'border-cyan-500/20', text: 'text-cyan-400', fill: 'bg-cyan-500' },
-    emerald: { bg: 'bg-emerald-500/10', border: 'border-emerald-500/20', text: 'text-emerald-400', fill: 'bg-emerald-500' },
-  }
-  return colors[color] || colors.blue
-}
-
 export default function AdminSkills() {
   const [skills, setSkills] = useState([])
   const [activeTab, setActiveTab] = useState('BACKEND')
@@ -41,7 +31,12 @@ export default function AdminSkills() {
       .finally(() => setLoading(false))
   }
   
-  useEffect(() => { load() }, [])
+  useEffect(() => {
+    adminApi.getSkills()
+      .then(r => setSkills(r.data))
+      .catch(() => toast.error('Failed to load skills'))
+      .finally(() => setLoading(false))
+  }, [])
 
   const openCreate = () => { 
     setEditing(null)

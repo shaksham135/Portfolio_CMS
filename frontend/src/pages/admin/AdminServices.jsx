@@ -27,7 +27,12 @@ export default function AdminServices() {
       .finally(() => setLoading(false))
   }
   
-  useEffect(() => { load() }, [])
+  useEffect(() => {
+    adminApi.getServices()
+      .then(r => setItems(r.data))
+      .catch(() => toast.error('Failed to load services'))
+      .finally(() => setLoading(false))
+  }, [])
 
   const openCreate = () => { 
     setEditing(null)

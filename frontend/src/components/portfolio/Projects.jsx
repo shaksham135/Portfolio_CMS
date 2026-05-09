@@ -97,25 +97,21 @@ function parseTech(ts) {
 
 export default function Projects() {
   const [projects, setProjects] = useState(DEMO_PROJECTS)
-  const [filtered, setFiltered] = useState(DEMO_PROJECTS)
   const [filter, setFilter]     = useState('All')
   const [selected, setSelected] = useState(null)
   const { ref, inView }         = useInView({ threshold: 0.05, triggerOnce: true })
+
+  const filtered = filter === 'All' ? projects : projects.filter(p => p.category === filter)
 
   useEffect(() => {
     publicApi.getProjects()
       .then(r => { 
         setProjects(r.data || [])
-        setFiltered(r.data || []) 
       })
       .catch(() => {
         console.warn("Backend offline, using mock data for Projects")
       })
   }, [])
-
-  useEffect(() => {
-    setFiltered(filter === 'All' ? projects : projects.filter(p => p.category === filter))
-  }, [filter, projects])
 
   return (
     <section id="projects" className="section-padding relative overflow-hidden">
@@ -475,7 +471,7 @@ export default function Projects() {
                         return JSON.parse(selected.features).map((feat, index) => (
                           <li key={index} style={{ marginBottom: '0.25rem' }}>{feat}</li>
                         ));
-                      } catch (e) {
+                      } catch {
                         return <li>{selected.features}</li>; // Fallback if not JSON
                       }
                     })()}

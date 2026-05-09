@@ -16,7 +16,7 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
-  const { theme, toggle, isDark } = useTheme()
+  const { toggle, isDark } = useTheme()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50)

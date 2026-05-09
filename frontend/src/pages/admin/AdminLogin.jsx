@@ -20,7 +20,7 @@ export default function AdminLogin() {
       await login(username, password)
       toast.success('Login successful')
       navigate('/admin/dashboard')
-    } catch (error) {
+    } catch {
       toast.error('Invalid credentials')
     } finally {
       setLoading(false)

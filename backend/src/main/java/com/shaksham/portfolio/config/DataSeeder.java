@@ -11,11 +11,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import org.springframework.beans.factory.annotation.Value;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class DataSeeder implements CommandLineRunner {
+
+    @Value("${app.admin.username}")
+    private String adminUsername;
+    
+    @Value("${app.admin.password}")
+    private String adminPassword;
+    
+    @Value("${app.admin.email}")
+    private String adminEmail;
 
     private final AdminRepository adminRepository;
     private final SkillRepository skillRepository;
@@ -34,7 +44,7 @@ public class DataSeeder implements CommandLineRunner {
     }
 
     private void seedAdmin() {
-        if (!adminRepository.existsByEmail("admin@gmail.com")) {
+        if (!adminRepository.existsByEmail(adminEmail)) {
             // Delete old admin if exists
             adminRepository.findByEmail("admin@shaksham.dev").ifPresent(oldAdmin -> {
                 adminRepository.delete(oldAdmin);
@@ -42,13 +52,13 @@ public class DataSeeder implements CommandLineRunner {
             });
             
             Admin admin = Admin.builder()
-                    .username("admin")
-                    .email("admin@gmail.com")
-                    .password(passwordEncoder.encode("admin123"))
+                    .username(adminUsername)
+                    .email(adminEmail)
+                    .password(passwordEncoder.encode(adminPassword))
                     .role("ROLE_ADMIN")
                     .build();
             adminRepository.save(admin);
-            log.info("✅ Default admin seeded: admin@gmail.com / admin123");
+            log.info("✅ Default admin seeded: {}", adminEmail);
         }
     }
 

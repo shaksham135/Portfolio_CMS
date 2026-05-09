@@ -19,7 +19,13 @@ export default function AdminTestimonials() {
       .catch(() => toast.error('Failed to load testimonials'))
       .finally(() => setLoading(false))
   }
-  useEffect(() => { load() }, [])
+  
+  useEffect(() => {
+    adminApi.getTestimonials()
+      .then(r => setItems(r.data))
+      .catch(() => toast.error('Failed to load testimonials'))
+      .finally(() => setLoading(false))
+  }, [])
 
   const openCreate = () => {
     setEditing(null)

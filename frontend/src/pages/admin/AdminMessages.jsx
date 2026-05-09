@@ -15,7 +15,13 @@ export default function AdminMessages() {
       .catch(() => toast.error('Failed to load messages'))
       .finally(() => setLoading(false))
   }
-  useEffect(() => { load() }, [])
+  
+  useEffect(() => {
+    adminApi.getMessages()
+      .then(r => setMessages(r.data))
+      .catch(() => toast.error('Failed to load messages'))
+      .finally(() => setLoading(false))
+  }, [])
 
   const markRead = async (id) => {
     try {

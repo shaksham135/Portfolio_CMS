@@ -19,3 +19,4 @@ Thumbs.db
 .idea/
 *.swp
 *.log
+frontend/lint_output.txt
