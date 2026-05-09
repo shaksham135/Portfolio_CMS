@@ -204,7 +204,7 @@ export default function Projects() {
             {filtered.map((project, i) => (
               <motion.article
                 key={project.id}
-                layout
+                layout="position"
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.92 }}

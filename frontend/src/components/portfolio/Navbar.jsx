@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiMenu, FiX, FiMoon, FiSun } from 'react-icons/fi'
+import { FiMenu, FiX, FiMoon, FiSun, FiUser, FiCode, FiBriefcase, FiAward, FiLayers, FiMessageSquare, FiMail } from 'react-icons/fi'
 import { useTheme } from '../../context/ThemeContext'
 
 const navLinks = [
-  { href: '#about', label: 'About' },
-  { href: '#skills', label: 'Skills' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#experience', label: 'Experience' },
-  { href: '#services', label: 'Services' },
-  { href: '#testimonials', label: 'Testimonials' },
-  { href: '#contact', label: 'Contact' },
+  { href: '#about', label: 'About', icon: <FiUser size={18} /> },
+  { href: '#skills', label: 'Skills', icon: <FiCode size={18} /> },
+  { href: '#projects', label: 'Projects', icon: <FiBriefcase size={18} /> },
+  { href: '#experience', label: 'Experience', icon: <FiAward size={18} /> },
+  { href: '#services', label: 'Services', icon: <FiLayers size={18} /> },
+  { href: '#testimonials', label: 'Testimonials', icon: <FiMessageSquare size={18} /> },
+  { href: '#contact', label: 'Contact', icon: <FiMail size={18} /> },
 ]
 
 export default function Navbar() {
@@ -76,13 +76,13 @@ export default function Navbar() {
             {/* Theme Toggle */}
             <button
               onClick={toggle}
-              className="p-2 rounded-full glass transition-all hover:scale-105"
+              className="p-1.5 rounded-full glass transition-all hover:scale-105"
               style={{ border: '1px solid var(--glass-border)', color: 'var(--text-secondary)' }}
               aria-label="Toggle theme"
             >
               {isDark
-                ? <FiSun size={15} className="text-yellow-400" />
-                : <FiMoon size={15} className="text-blue-600" />}
+                ? <FiSun size={16} className="text-yellow-400" />
+                : <FiMoon size={16} className="text-blue-600" />}
             </button>
 
             {/* Hire Me — desktop */}
@@ -92,12 +92,12 @@ export default function Navbar() {
 
             {/* Mobile Burger */}
             <button
-              className="md:hidden p-2 rounded-full glass"
+              className="md:hidden p-1.5 rounded-full glass"
               style={{ border: '1px solid var(--glass-border)', color: 'var(--text-secondary)' }}
               onClick={() => setOpen(true)}
               aria-label="Open menu"
             >
-              <FiMenu size={18} />
+              <FiMenu size={16} />
             </button>
           </div>
         </div>
@@ -126,15 +126,16 @@ export default function Navbar() {
               transition={{ duration: 0.3, type: 'spring', bounce: 0, stiffness: 90 }}
               className="md:hidden fixed top-0 right-0 bottom-0 z-[70] w-[280px] shadow-2xl flex flex-col"
               style={{
-                background: isDark ? 'rgba(10,10,15,0.98)' : 'rgba(250,252,255,0.98)',
+                background: isDark ? 'rgba(10,10,15,0.85)' : 'rgba(250,252,255,0.85)',
                 backdropFilter: 'blur(20px)',
                 borderLeft: '1px solid var(--glass-border)',
+                boxShadow: isDark ? '-5px 0 25px rgba(0,0,0,0.5)' : '-5px 0 25px rgba(0,0,0,0.1)',
               }}
             >
               {/* Header inside Sidebar */}
               <div className="flex items-center justify-between p-5 border-b" style={{ borderColor: 'var(--glass-border)' }}>
                 <span className="font-display text-lg font-bold gradient-text" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-                  Menu
+                  Navigation
                 </span>
                 <button
                   className="p-2 rounded-full glass transition-transform active:scale-95"
@@ -147,7 +148,7 @@ export default function Navbar() {
               </div>
 
               {/* Links List */}
-              <div className="flex flex-col px-6 py-4 gap-1 overflow-y-auto" style={{ flex: 1 }}>
+              <div className="flex flex-col px-4 py-4 gap-1 overflow-y-auto" style={{ flex: 1 }}>
                 {navLinks.map((link, i) => (
                   <motion.a
                     key={link.href}
@@ -156,14 +157,14 @@ export default function Navbar() {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 + (i * 0.05) }}
-                    className="text-base font-semibold py-3 transition-colors hover:text-blue-500"
+                    className="flex items-center text-base font-medium py-3 px-4 rounded-xl transition-all hover:bg-blue-500/10 hover:text-blue-500"
                     style={{
                       color: 'var(--text-primary)',
                       textDecoration: 'none',
-                      borderBottom: '1px solid rgba(150,150,150,0.1)',
                     }}
                   >
-                    {link.label}
+                    <span className="mr-3 text-blue-500" style={{ opacity: 0.8 }}>{link.icon}</span>
+                    <span>{link.label}</span>
                   </motion.a>
                 ))}
               </div>
@@ -172,8 +173,8 @@ export default function Navbar() {
               <div className="p-6 border-t" style={{ borderColor: 'var(--glass-border)' }}>
                 <a
                   href="#contact"
-                  className="btn-primary w-full flex items-center justify-center py-4 text-sm font-bold shadow-lg"
-                  style={{ borderRadius: '14px' }}
+                  className="btn-primary w-full flex items-center justify-center py-3 text-sm font-bold shadow-lg"
+                  style={{ borderRadius: '12px' }}
                   onClick={() => setOpen(false)}
                 >
                   Let's Work Together

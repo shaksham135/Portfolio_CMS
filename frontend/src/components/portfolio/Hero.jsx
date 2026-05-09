@@ -32,8 +32,9 @@ export default function Hero() {
       style={{
         background: 'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(59,130,246,0.18), transparent)',
         display: 'flex',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         justifyContent: 'center',
+        paddingTop: '120px',
       }}
     >
       {/* Floating Blobs */}
@@ -53,17 +54,7 @@ export default function Hero() {
 
       {/* ── CONTENT COLUMN ── fully centered ───────────────── */}
       <div
-        className="relative z-10 w-full"
-        style={{
-          maxWidth: '780px',
-          margin: '0 auto',
-          padding: '6rem 1.25rem 5rem',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          textAlign: 'center',
-          gap: '0',
-        }}
+        className="relative z-10 w-full max-w-[780px] mx-auto flex flex-col items-center text-center gap-0 pt-4 pb-12 px-4 md:pt-8 md:pb-20 md:px-5"
       >
         {/* 1. Availability Badge */}
         <motion.div

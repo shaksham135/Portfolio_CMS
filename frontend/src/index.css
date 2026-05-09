@@ -295,15 +295,20 @@ body::before {
   opacity: 0.12;
   pointer-events: none;
   animation: float 8s ease-in-out infinite;
+  will-change: transform;
 }
 
 @media (max-width: 768px) {
-  .blob { opacity: 0.08; filter: blur(60px); }
+  .blob { 
+    opacity: 0.08; 
+    filter: blur(40px); 
+    animation: none !important;
+  }
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0px) scale(1); }
-  50%       { transform: translateY(-25px) scale(1.04); }
+  50%       { transform: translateY(-15px) scale(1.02); }
 }
 
 /* ============================================
