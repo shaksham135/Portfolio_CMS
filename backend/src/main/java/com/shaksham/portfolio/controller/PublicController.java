@@ -67,6 +67,11 @@ public class PublicController {
         return ResponseEntity.ok(aboutService.get());
     }
 
+    @GetMapping("/health")
+    public ResponseEntity<Map<String, String>> healthCheck() {
+        return ResponseEntity.ok(Map.of("status", "UP"));
+    }
+
     @PostMapping("/contact")
     public ResponseEntity<Map<String, String>> submitContact(@Valid @RequestBody ContactRequest req) {
         contactService.submitMessage(req);
