@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { useForm } from 'react-hook-form'
-import { FiSend, FiMail, FiGithub, FiLinkedin, FiMapPin, FiUser, FiEdit3, FiMessageSquare } from 'react-icons/fi'
+import { FiSend, FiMail, FiMapPin, FiUser, FiEdit3, FiMessageSquare } from 'react-icons/fi'
 import { FaWhatsapp } from 'react-icons/fa'
 import toast from 'react-hot-toast'
 import { publicApi } from '../../api'
+import SocialLinks from './SocialLinks'
 
 export default function Contact() {
   const [about, setAbout] = useState(null)
@@ -32,8 +33,6 @@ export default function Contact() {
 
   const email = about?.email || 'shaksham@email.com'
   const whatsapp = about?.whatsappNumber
-  const github = about?.githubUrl || 'https://github.com/shaksham'
-  const linkedin = about?.linkedinUrl || 'https://linkedin.com/in/shaksham'
   const location = about?.location || 'New Delhi, India'
 
   return (
@@ -47,7 +46,7 @@ export default function Contact() {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          style={{ textAlign: 'center', marginBottom: '5rem' }}
+          style={{ textAlign: 'center', marginBottom: 'clamp(3rem, 8vw, 5rem)' }}
         >
           <p style={{
             color: '#3B82F6', fontSize: '0.8rem', fontWeight: 800,
@@ -66,7 +65,7 @@ export default function Contact() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
-            <div className="glass p-6 sm:p-10 lg:p-14 rounded-3xl sm:rounded-[40px] border border-white/10"
+            <div className="glass p-5 sm:p-10 lg:p-14 rounded-3xl sm:rounded-[40px] border border-white/10"
                  style={{ 
                    background: 'var(--glass-bg)', 
                    backdropFilter: 'blur(20px)',
@@ -75,46 +74,49 @@ export default function Contact() {
               
               <h3 style={{
                 fontFamily: 'Space Grotesk, sans-serif',
-                fontSize: '2.25rem', fontWeight: 800,
-                color: 'var(--text-primary)', marginBottom: '4rem',
+                fontSize: 'clamp(1.5rem, 5vw, 2.25rem)', fontWeight: 800,
+                color: 'var(--text-primary)', marginBottom: 'clamp(2rem, 8vw, 4rem)',
                 lineHeight: 1.2
               }}>
                 Contact <span className="text-blue-500">Information</span>
               </h3>
 
-              <div className="space-y-12">
-                <div className="flex items-center gap-7 group">
-                  <div className="w-16 h-16 rounded-2xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20 transition-all duration-300 group-hover:bg-blue-500 group-hover:text-white">
-                    <FiMail size={30} className="text-blue-400 group-hover:text-white" />
+              <div className="space-y-6 sm:space-y-12">
+                <div className="flex items-center gap-4 sm:gap-7 group">
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20 transition-all duration-300 group-hover:bg-blue-500 group-hover:text-white flex-shrink-0">
+                    <FiMail size={24} className="text-blue-400 group-hover:text-white sm:hidden" />
+                    <FiMail size={30} className="text-blue-400 group-hover:text-white hidden sm:block" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '8px' }}>Email</p>
-                    <a href={`mailto:${email}`} className="text-xl font-bold hover:text-blue-500 transition-colors" style={{ color: 'var(--text-primary)' }}>
+                    <a href={`mailto:${email}`} className="text-lg sm:text-xl font-bold hover:text-blue-500 transition-colors break-all" style={{ color: 'var(--text-primary)' }}>
                       {email}
                     </a>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-7 group">
-                  <div className="w-16 h-16 rounded-2xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20 transition-all duration-300 group-hover:bg-purple-500 group-hover:text-white">
-                    <FiMapPin size={30} className="text-purple-400 group-hover:text-white" />
+                <div className="flex items-center gap-4 sm:gap-7 group">
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20 transition-all duration-300 group-hover:bg-purple-500 group-hover:text-white flex-shrink-0">
+                    <FiMapPin size={24} className="text-purple-400 group-hover:text-white sm:hidden" />
+                    <FiMapPin size={30} className="text-purple-400 group-hover:text-white hidden sm:block" />
                   </div>
                   <div>
                     <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '8px' }}>Location</p>
-                    <p className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                    <p className="text-lg sm:text-xl font-bold" style={{ color: 'var(--text-primary)' }}>
                       {location}
                     </p>
                   </div>
                 </div>
 
                 {whatsapp && (
-                  <div className="flex items-center gap-7 group">
-                    <div className="w-16 h-16 rounded-2xl bg-green-500/10 flex items-center justify-center border border-green-500/20 transition-all duration-300 group-hover:bg-green-500 group-hover:text-white">
-                      <FaWhatsapp size={30} className="text-green-400 group-hover:text-white" />
+                  <div className="flex items-center gap-4 sm:gap-7 group">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-green-500/10 flex items-center justify-center border border-green-500/20 transition-all duration-300 group-hover:bg-green-500 group-hover:text-white flex-shrink-0">
+                      <FaWhatsapp size={24} className="text-green-400 group-hover:text-white sm:hidden" />
+                      <FaWhatsapp size={30} className="text-green-400 group-hover:text-white hidden sm:block" />
                     </div>
                     <div>
                       <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '8px' }}>WhatsApp</p>
-                      <a href={`https://wa.me/${whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="text-xl font-bold hover:text-green-500 transition-colors" style={{ color: 'var(--text-primary)' }}>
+                      <a href={`https://wa.me/${whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="text-lg sm:text-xl font-bold hover:text-green-500 transition-colors" style={{ color: 'var(--text-primary)' }}>
                         Chat Online
                       </a>
                     </div>
@@ -122,17 +124,12 @@ export default function Contact() {
                 )}
               </div>
 
-              <div style={{ marginTop: '6rem' }}>
+              <div style={{ marginTop: 'clamp(3rem, 10vw, 6rem)' }}>
                 <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.3em', marginBottom: '1.5rem' }}>
                   Connect With Me
                 </p>
-                <div className="flex gap-6">
-                  <a href={github} target="_blank" rel="noopener noreferrer" className="w-14 h-14 glass rounded-2xl flex items-center justify-center border border-white/10 hover:border-blue-500 hover:text-blue-500 transition-all">
-                    <FiGithub size={26} />
-                  </a>
-                  <a href={linkedin} target="_blank" rel="noopener noreferrer" className="w-14 h-14 glass rounded-2xl flex items-center justify-center border border-white/10 hover:border-blue-500 hover:text-blue-500 transition-all">
-                    <FiLinkedin size={26} />
-                  </a>
+                <div className="flex gap-4 sm:gap-6">
+                  <SocialLinks about={about} variant="contact" />
                 </div>
               </div>
             </div>
@@ -144,7 +141,7 @@ export default function Contact() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.3 }}
           >
-            <div className="glass p-6 sm:p-10 lg:p-14 rounded-3xl sm:rounded-[40px] border border-white/10"
+            <div className="glass p-5 sm:p-10 lg:p-14 rounded-3xl sm:rounded-[40px] border border-white/10"
                  style={{ 
                    background: 'var(--glass-bg)', 
                    backdropFilter: 'blur(20px)'
@@ -152,15 +149,15 @@ export default function Contact() {
               
               <h3 style={{
                 fontFamily: 'Space Grotesk, sans-serif',
-                fontSize: '2.25rem', fontWeight: 800,
-                color: 'var(--text-primary)', marginBottom: '4rem',
+                fontSize: 'clamp(1.5rem, 5vw, 2.25rem)', fontWeight: 800,
+                color: 'var(--text-primary)', marginBottom: 'clamp(2rem, 8vw, 4rem)',
                 lineHeight: 1.2
               }}>
                 Send a <span className="text-purple-500">Message</span>
               </h3>
 
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
-                <div className="grid sm:grid-cols-2 gap-10">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 sm:space-y-10">
+                <div className="grid sm:grid-cols-2 gap-6 sm:gap-10">
                   <div className="space-y-4">
                     <label style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', fontWeight: 700, marginLeft: '4px' }}>Full Name</label>
                     <div className="relative group">

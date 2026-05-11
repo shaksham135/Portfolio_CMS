@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion'
 import { TypeAnimation } from 'react-type-animation'
-import { FiArrowDown, FiDownload, FiGithub, FiLinkedin } from 'react-icons/fi'
+import { FiArrowDown, FiDownload } from 'react-icons/fi'
 import { useEffect, useState } from 'react'
 import { publicApi } from '../../api'
+import SocialLinks from './SocialLinks'
 
 const ROLES = [
   'Java Backend Developer', 2200,
@@ -54,7 +55,11 @@ export default function Hero() {
 
       {/* ── CONTENT COLUMN ── fully centered ───────────────── */}
       <div
-        className="relative z-10 w-full max-w-[780px] mx-auto flex flex-col items-center text-center gap-0 pt-4 pb-12 px-4 md:pt-8 md:pb-20 md:px-5"
+        className="relative z-10 w-full max-w-[780px] mx-auto flex flex-col items-center text-center gap-0 pt-4 pb-12 md:pt-8 md:pb-20"
+        style={{
+          paddingLeft: '1.5rem',
+          paddingRight: '1.5rem',
+        }}
       >
         {/* 1. Availability Badge */}
         <motion.div
@@ -188,45 +193,7 @@ export default function Hero() {
             width: '100%',
           }}
         >
-          {[
-            { url: about?.githubUrl || 'https://github.com/shaksham', Icon: FiGithub, label: 'GitHub' },
-            { url: about?.linkedinUrl || 'https://linkedin.com/in/shaksham', Icon: FiLinkedin, label: 'LinkedIn' },
-          ].map(({ url, Icon, label }) => (
-            <a
-              key={label}
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={label}
-              className="glass"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '42px',
-                height: '42px',
-                borderRadius: '50%',
-                border: '1px solid var(--glass-border)',
-                color: 'var(--text-muted)',
-                transition: 'all 0.25s ease',
-                textDecoration: 'none',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.borderColor = '#3B82F6'
-                e.currentTarget.style.color = '#60A5FA'
-                e.currentTarget.style.transform = 'translateY(-2px) scale(1.08)'
-                e.currentTarget.style.boxShadow = '0 6px 20px rgba(59,130,246,0.3)'
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.borderColor = 'var(--glass-border)'
-                e.currentTarget.style.color = 'var(--text-muted)'
-                e.currentTarget.style.transform = 'none'
-                e.currentTarget.style.boxShadow = 'none'
-              }}
-            >
-              <Icon size={18} />
-            </a>
-          ))}
+          <SocialLinks about={about} variant="hero" />
         </motion.div>
 
         {/* 7. Stats — CENTERED GRID */}

@@ -33,7 +33,7 @@ public class AboutService {
         about.setEmail(req.getEmail());
         about.setGithubUrl(req.getGithubUrl());
         about.setLinkedinUrl(req.getLinkedinUrl());
-        about.setTwitterUrl(req.getTwitterUrl());
+        about.setInstagramUrl(req.getInstagramUrl());
         about.setWhatsappNumber(req.getWhatsappNumber());
         return aboutRepository.save(about);
     }

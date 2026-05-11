@@ -10,7 +10,8 @@ export default function AdminTestimonials() {
   const [showModal, setShowModal] = useState(false)
   const [editing, setEditing] = useState(null)
   const [loading, setLoading] = useState(true)
-  const { register, handleSubmit, reset } = useForm()
+  const { register, handleSubmit, reset, setValue, watch } = useForm()
+  const currentImageUrl = watch('imageUrl')
 
   const load = () => {
     setLoading(true)
@@ -198,8 +199,33 @@ export default function AdminTestimonials() {
               </div>
 
               <div className="form-group">
-                <label className="form-label">Photo URL (optional)</label>
-                <input {...register('imageUrl')} placeholder="https://..." className="form-input" />
+                <label className="form-label">Photo</label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <input 
+                    type="file" 
+                    accept="image/*"
+                    onChange={async (e) => {
+                      const file = e.target.files[0]
+                      if (!file) return
+                      try {
+                        toast.loading('Uploading image...', { id: 'upload' })
+                        const res = await adminApi.uploadImage(file, 'testimonials')
+                        setValue('imageUrl', res.data.url)
+                        toast.success('Image uploaded', { id: 'upload' })
+                      } catch {
+                        toast.error('Failed to upload image', { id: 'upload' })
+                      }
+                    }} 
+                    className="form-input" 
+                    style={{ flex: 1 }}
+                  />
+                  {currentImageUrl && (
+                    <div style={{ width: '40px', height: '40px', borderRadius: '8px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)' }}>
+                      <img src={currentImageUrl} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    </div>
+                  )}
+                </div>
+                <input type="hidden" {...register('imageUrl')} />
               </div>
 
               <div className="form-group">

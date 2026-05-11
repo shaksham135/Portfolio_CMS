@@ -37,6 +37,6 @@ public class About {
     // Social links
     private String githubUrl;
     private String linkedinUrl;
-    private String twitterUrl;
+    private String instagramUrl;
     private String whatsappNumber;
 }

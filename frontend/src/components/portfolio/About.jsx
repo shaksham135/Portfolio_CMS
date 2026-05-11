@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { FiDownload, FiMapPin, FiMail, FiGithub, FiLinkedin, FiCode } from 'react-icons/fi'
+import { FiDownload, FiMapPin, FiMail, FiCode } from 'react-icons/fi'
 import { publicApi } from '../../api'
+import SocialLinks from './SocialLinks'
 
 export default function About() {
   const [about, setAbout] = useState(null)
@@ -33,14 +34,14 @@ export default function About() {
         <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left: Profile Card */}
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="flex justify-center"
+            className="w-full flex flex-col items-center justify-center"
           >
-            <div className="relative w-full max-w-xs">
+            <div className="relative w-60 h-60 sm:w-72 sm:h-72 mx-auto">
               {/* Main Avatar Card */}
-              <div className="gradient-border mx-auto w-60 h-60 sm:w-72 sm:h-72 rounded-2xl overflow-hidden">
+              <div className="gradient-border w-full h-full rounded-2xl overflow-hidden">
                 {about?.profileImageUrl ? (
                   <img
                     src={about.profileImageUrl}
@@ -80,7 +81,7 @@ export default function About() {
 
               {/* Floating stat badges */}
               <div
-                className="absolute -bottom-4 -right-2 glass border border-white/10 rounded-xl px-3 py-2 text-center"
+                className="absolute -bottom-4 -right-16 glass border border-white/10 rounded-xl px-3 py-2 text-center"
                 style={{ background: 'rgba(59,130,246,0.12)' }}
               >
                 <div className="text-xl font-bold gradient-text-2" style={{ fontFamily: 'Space Grotesk' }}>18+</div>
@@ -88,7 +89,7 @@ export default function About() {
               </div>
 
               <div
-                className="absolute -top-3 -left-2 glass border border-white/10 rounded-xl px-3 py-2 text-center"
+                className="absolute -top-3 -left-12 glass border border-white/10 rounded-xl px-3 py-2 text-center"
                 style={{ background: 'rgba(139,92,246,0.12)' }}
               >
                 <div className="text-xl font-bold" style={{ background: 'linear-gradient(135deg,#8B5CF6,#06B6D4)', backgroundClip: 'text', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontFamily: 'Space Grotesk' }}>15+</div>
@@ -99,10 +100,10 @@ export default function About() {
 
           {/* Right: Content */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="flex flex-col gap-4"
+            className="flex flex-col gap-4 items-center md:items-start text-center md:text-left"
           >
             <h3
               className="text-xl sm:text-2xl font-bold"
@@ -117,7 +118,7 @@ export default function About() {
             </p>
 
             <div
-              className="glass border border-blue-500/20 rounded-xl p-4"
+              className="glass border border-blue-500/20 rounded-xl p-4 w-full"
               style={{ background: 'rgba(59,130,246,0.05)' }}
             >
               <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
@@ -128,7 +129,7 @@ export default function About() {
             </div>
 
             {/* Meta Info */}
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 justify-center md:justify-start">
               {about?.location && (
                 <div className="flex items-center gap-1.5 text-sm" style={{ color: 'var(--text-muted)' }}>
                   <FiMapPin className="text-blue-400 shrink-0" size={13} />
@@ -148,7 +149,7 @@ export default function About() {
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-3 pt-1">
+            <div className="flex flex-wrap gap-3 pt-1 justify-center md:justify-start">
               {about?.resumeUrl && (
                 <a
                   href={about.resumeUrl}
@@ -159,26 +160,7 @@ export default function About() {
                   <FiDownload size={14} /> Download Resume
                 </a>
               )}
-              {about?.githubUrl && (
-                <a
-                  href={about.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-outline text-sm"
-                >
-                  <FiGithub size={14} /> GitHub
-                </a>
-              )}
-              {about?.linkedinUrl && (
-                <a
-                  href={about.linkedinUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-outline text-sm"
-                >
-                  <FiLinkedin size={14} /> LinkedIn
-                </a>
-              )}
+              <SocialLinks about={about} variant="about" />
               {/* Fallback buttons when no backend */}
               {!about && (
                 <>

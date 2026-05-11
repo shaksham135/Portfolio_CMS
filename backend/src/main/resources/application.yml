@@ -33,9 +33,9 @@ jwt:
 
 # Cloudinary Configuration
 cloudinary:
-  cloud-name: ${CLOUDINARY_CLOUD_NAME:your-cloud-name}
-  api-key: ${CLOUDINARY_API_KEY:your-api-key}
-  api-secret: ${CLOUDINARY_API_SECRET:your-api-secret}
+  cloud-name: ${CLOUDINARY_CLOUD_NAME:dw0qkmfba}
+  api-key: ${CLOUDINARY_API_KEY:697973764677875}
+  api-secret: ${CLOUDINARY_API_SECRET:l6a2_d2zTvujJaftE4xOo3YGUmI}
 
 # CORS
 cors:

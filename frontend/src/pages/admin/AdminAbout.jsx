@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { FiSave, FiUser, FiInfo, FiLink, FiMapPin, FiMail, FiPhone, FiGithub, FiLinkedin, FiTwitter, FiMessageSquare, FiActivity } from 'react-icons/fi'
-import { useForm } from 'react-hook-form'
+import { FiSave, FiUser, FiInfo, FiLink, FiMapPin, FiMail, FiPhone, FiGithub, FiLinkedin, FiInstagram, FiMessageSquare, FiActivity } from 'react-icons/fi'
+import { useForm, useWatch } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { adminApi } from '../../api'
 import '../../styles/admin-common.css'
@@ -16,7 +16,7 @@ const FIELDS = [
   { name: 'phone', label: 'Phone', placeholder: '+91...', type: 'text', icon: FiPhone, section: 'contact', color: 'emerald' },
   { name: 'githubUrl', label: 'GitHub URL', placeholder: 'https://github.com/...', type: 'url', icon: FiGithub, section: 'social', color: 'cyan' },
   { name: 'linkedinUrl', label: 'LinkedIn URL', placeholder: 'https://linkedin.com/in/...', type: 'url', icon: FiLinkedin, section: 'social', color: 'cyan' },
-  { name: 'twitterUrl', label: 'Twitter URL', placeholder: 'https://twitter.com/...', type: 'url', icon: FiTwitter, section: 'social', color: 'cyan' },
+  { name: 'instagramUrl', label: 'Instagram URL', placeholder: 'https://instagram.com/...', type: 'url', icon: FiInstagram, section: 'social', color: 'cyan' },
   { name: 'whatsappNumber', label: 'WhatsApp Number', placeholder: '+91...', type: 'text', icon: FiMessageSquare, section: 'contact', color: 'emerald' },
 ]
 
@@ -30,7 +30,7 @@ const SECTIONS = {
 export default function AdminAbout() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
-  const { register, handleSubmit, reset } = useForm()
+  const { register, handleSubmit, reset, setValue, control } = useForm()
 
   useEffect(() => {
     adminApi.getAbout()
@@ -64,19 +64,50 @@ export default function AdminAbout() {
     )
   }
 
-  const InputField = ({ field }) => (
-    <div className="form-group" style={{ marginBottom: '16px' }}>
-      <label className="form-label" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <field.icon size={14} />
-        {field.label}
-      </label>
-      {field.type === 'textarea' ? (
-        <textarea {...register(field.name)} placeholder={field.placeholder} rows={field.name === 'summary' ? 4 : 3} className="form-textarea" />
-      ) : (
-        <input {...register(field.name)} type={field.type} placeholder={field.placeholder} className="form-input" />
-      )}
-    </div>
-  )
+  const InputField = ({ field }) => {
+    const currentUrl = useWatch({ control, name: field.name })
+    
+    return (
+      <div className="form-group" style={{ marginBottom: '16px' }}>
+        <label className="form-label" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <field.icon size={14} />
+          {field.label}
+        </label>
+        {field.type === 'textarea' ? (
+          <textarea {...register(field.name)} placeholder={field.placeholder} rows={field.name === 'summary' ? 4 : 3} className="form-textarea" />
+        ) : field.name === 'profileImageUrl' ? (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <input 
+              type="file" 
+              accept="image/*"
+              onChange={async (e) => {
+                const file = e.target.files[0]
+                if (!file) return
+                try {
+                  toast.loading('Uploading image...', { id: 'upload' })
+                  const res = await adminApi.uploadImage(file, 'about')
+                  setValue(field.name, res.data.url)
+                  toast.success('Image uploaded', { id: 'upload' })
+                } catch {
+                  toast.error('Failed to upload image', { id: 'upload' })
+                }
+              }} 
+              className="form-input" 
+              style={{ flex: 1 }}
+            />
+            {currentUrl && (
+              <div style={{ width: '40px', height: '40px', borderRadius: '8px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)' }}>
+                <img src={currentUrl} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+            )}
+            <input type="hidden" {...register(field.name)} />
+          </div>
+        ) : (
+          <input {...register(field.name)} type={field.type} placeholder={field.placeholder} className="form-input" />
+        )}
+      </div>
+    )
+  }
 
   return (
     <div className="admin-page">

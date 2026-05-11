@@ -76,8 +76,8 @@ export default function Navbar() {
             {/* Theme Toggle */}
             <button
               onClick={toggle}
-              className="p-1.5 rounded-full glass transition-all hover:scale-105"
-              style={{ border: '1px solid var(--glass-border)', color: 'var(--text-secondary)' }}
+              className="p-1.5 transition-all hover:scale-105"
+              style={{ color: 'var(--text-secondary)' }}
               aria-label="Toggle theme"
             >
               {isDark
@@ -92,8 +92,8 @@ export default function Navbar() {
 
             {/* Mobile Burger */}
             <button
-              className="md:hidden p-1.5 rounded-full glass"
-              style={{ border: '1px solid var(--glass-border)', color: 'var(--text-secondary)' }}
+              className="md:hidden p-1.5"
+              style={{ color: 'var(--text-secondary)' }}
               onClick={() => setOpen(true)}
               aria-label="Open menu"
             >
